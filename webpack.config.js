@@ -3,12 +3,34 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 // const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const webpack = require("webpack");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
   entry: {
     app: "./src/index.js",
   },
   optimization: {
+    minimize: true,
+    minimizer: [
+      new CssMinimizerPlugin({
+        parallel: true,
+        minimizerOptions: {
+          presets: [
+            "default",
+            {
+              discardComments: { removeAll: true },
+            },
+          ],
+        },
+      }),
+      new TerserPlugin({
+        parallel: true,
+        terserOptions: {
+          ecma: 6,
+        },
+      }),
+    ],
     splitChunks: {
       cacheGroups: {
         styles: {
@@ -26,7 +48,6 @@ module.exports = {
     port: 3000,
     open: "Chrome",
   },
-  watch: true,
   devtool: "source-map",
   output: {
     path: path.resolve(__dirname, "./public"),
@@ -49,8 +70,12 @@ module.exports = {
           MiniCssExtractPlugin.loader,
           {
             loader: "css-loader",
+            options: { sourceMap: true },
           },
-          "sass-loader",
+          {
+            loader: "sass-loader",
+            options: { sourceMap: true },
+          },
         ],
       },
     ],

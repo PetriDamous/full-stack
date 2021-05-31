@@ -8,7 +8,7 @@ class App extends Component {
   }
 
   render() {
-    return <Header headerTxt="My balls is on fire!!!!" />;
+    return <Header headerTxt="My dick is on fire!!!!" />;
   }
 }
 

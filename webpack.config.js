@@ -60,7 +60,9 @@ module.exports = {
       chunkFilename: "[name].css",
     }),
     new webpack.HotModuleReplacementPlugin(),
-    new HtmlWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      template: "./src/index.html",
+    }),
   ],
   module: {
     rules: [
@@ -78,6 +80,19 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.m?js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env", "@babel/react"],
+          },
+        },
+      },
     ],
+  },
+  resolve: {
+    extensions: [".js", ".scss"],
   },
 };

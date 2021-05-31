@@ -1,3 +1,8 @@
+import React from "react";
+import ReactDOM from "react-dom";
+
 import "./sass/main.scss";
 
-document.body.innerHTML = "<h1>My balls are hot</h1>";
+import App from "./App";
+
+ReactDOM.render(<App />, document.getElementById("root"));
